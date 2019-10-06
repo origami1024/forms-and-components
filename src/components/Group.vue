@@ -22,7 +22,7 @@ export default {
   text-align center
   outline 2px dashed lime
   font-family Raleway, sans-serif
-  padding 50px 0
+  padding 10px 0
 
 .group__display
   outline 2px dashed pink

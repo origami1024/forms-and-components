@@ -15,10 +15,12 @@ export default {
     bgcl: {type: String, default: 'lightblue'},
     txtc: {type: String, default: 'white'},
     small: {type: Boolean, default: false},
+    w: {type: Number, default: null}
   },
   data: function() {
     return {
-      sizes: {normal: [119, 30, 3], small: [79, 24, 2]} //width, height, padding-bottom of wrapper - make border smaller
+      sizes: {normal: [119, 30, 3], small: [79, 24, 2]}, //width, height, padding-bottom of wrapper - make border smaller
+      up: true
     }
   },
   computed: {//${this.bgc}
@@ -27,16 +29,15 @@ export default {
       color: ${this.bgc}; 
       background-color: white;
       height: ${!this.small ? this.sizes.normal[1] : this.sizes.small[1]}px;
-      width: ${!this.small ? this.sizes.normal[0] : this.sizes.small[0]}px;
+      width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;
       border: 1px solid ${this.bgc};
-      border-radius: 3px;
       `
     },
     wrapStyle() {
       return `
       background-color: ${this.bgc};
-      padding-bottom: ${!this.small ? this.sizes.normal[2] : this.sizes.small[2]}px;
-      `
+      padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
+      `//padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
     }
   },
   methods: {
@@ -46,12 +47,15 @@ export default {
     },
     mouseOut(e){
       this.$refs.zoomer.classList.remove('mDown')
+      this.up = true
     },
     mouseDown(e){
       this.$refs.zoomer.classList.add('mDown')
+      this.up = false
     },
     mouseUp(e){
       this.$refs.zoomer.classList.remove('mDown')
+      this.up = true
     }
   },
   mounted () {
@@ -68,24 +72,30 @@ export default {
   position relative
   overflow hidden
   border-radius 3px
-  //height 33px
-  //padding-bottom 3px
   align-self flex-end
+  display flex
+  flex-direction column
+  transition-duration .3s
   &:hover
     background-color var(--wrapHoverbgcl) !important
 .Btn
   --btnhoverbg coral
+  align-self flex-end
   font-family 'Open Sans', sans-serif
   font-size 12px
   font-weight 600
   letter-spacing 1px
   box-sizing border-box
+  border-radius: 3px;
   cursor: url("./../assets/img/theFingering.png"), auto;
   &:hover
     background-color var(--btnhoverbg) !important
     color white !important
   &:focus
     outline 0
+  &:active
+    //
+    //transform translateY(-3px)
 .zoomer
   position absolute
   border-radius 100%
