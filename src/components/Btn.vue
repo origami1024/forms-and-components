@@ -1,12 +1,11 @@
 <template>
   <div class="btnWrap" ref="btnwrapper" :style="wrapStyle">
     <button class="Btn" ref="theBtn" :style="btnStyle" v-on="{ mousemove: mouseMove, mouseout: mouseOut, mousedown: mouseDown, mouseup: mouseUp}">{{title}}</button>
-    <div class="zoomer" ref="zoomer"></div>
+    <span class="ripple" ref="ripple" v-on:animationend="rippleEnd" :style="rippleStyle"></span>
   </div>
 </template>
 
 <script>
-//REDO THE CLICK ANIMATION!!!
 export default {
   name: 'Btn',
   props: {
@@ -23,40 +22,69 @@ export default {
       up: true
     }
   },
-  computed: {//${this.bgc}
+  computed: {
     btnStyle() {
       return `
-      color: ${this.bgc}; 
-      background-color: white;
-      height: ${!this.small ? this.sizes.normal[1] : this.sizes.small[1]}px;
-      width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;
-      border: 1px solid ${this.bgc};
+        color: ${this.bgc}; 
+        background-color: white;
+        height: ${!this.small ? this.sizes.normal[1] : this.sizes.small[1]}px;
+        width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;
+        border: 1px solid ${this.bgc};
       `
     },
     wrapStyle() {
       return `
-      background-color: ${this.bgc};
-      padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
-      `//padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
+        background-color: ${this.bgc};
+        padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
+        margin-top: ${!this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
+      `
+    },
+    rippleStyle() {
+      return `
+        background-color: white;
+        opacity: 0.7;
+        display: none;
+        border-radius: 100%;
+        position: absolute;
+        transition-duration: 0;
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        pointer-events: none;
+        left: 0px;
+        top: 0px;
+        z-index: 1;
+      `
     }
   },
   methods: {
     mouseMove(e){
-      this.$refs.zoomer.style.left = e.offsetX + 'px'
-      this.$refs.zoomer.style.top = e.offsetY + 'px'
     },
     mouseOut(e){
-      this.$refs.zoomer.classList.remove('mDown')
       this.up = true
     },
     mouseDown(e){
-      this.$refs.zoomer.classList.add('mDown')
+      this.animateRipple(e)
       this.up = false
+      
     },
     mouseUp(e){
-      this.$refs.zoomer.classList.remove('mDown')
       this.up = true
-    }
+    },
+    animateRipple(e) {
+			//let el  = this.$refs.tiBtn;
+      //let pos = this.$refs.getBoundingClientRect();
+      this.$refs.ripple.style.left = (e.offsetX - 100) + 'px'
+      this.$refs.ripple.style.top = (e.offsetY - 100) + 'px'
+      this.$refs.ripple.style.display = 'block'
+      this.$refs.ripple.classList.remove('rippleAnimClass')
+      void this.$refs.ripple.offsetWidth;
+      this.$refs.ripple.classList.add('rippleAnimClass')
+      
+    },
+    rippleEnd: function(i) {
+      this.$refs.ripple.style.display = 'none'
+		}
   },
   mounted () {
     this.$refs.theBtn.style.setProperty('--btnhoverbg', this.bgc)
@@ -80,7 +108,7 @@ export default {
     background-color var(--wrapHoverbgcl) !important
 .Btn
   --btnhoverbg coral
-  align-self flex-end
+  position relative
   font-family 'Open Sans', sans-serif
   font-size 12px
   font-weight 600
@@ -99,15 +127,24 @@ export default {
 .zoomer
   position absolute
   border-radius 100%
-  width 1px
-  height 1px
+  width 50px
+  height 50px
   background-color #fff
   pointer-events none
   opacity 0
   transition-duration 0.1s
+  transform scale(0.1)
 
 .mDown
   opacity 0.5
-  transform scale(50)
-  
+  transform scale(1)
+
+.rippleAnimClass
+  animation-name ripple
+  animation-duration 1s
+@keyframes ripple {
+	0%   { transform: scale(0); }
+	80%  { transform: scale(0.8); }
+	100% { transform: scale(1); opacity: 0; }
+}
 </style>

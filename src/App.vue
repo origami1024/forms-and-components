@@ -14,9 +14,23 @@
         <ArrBtn bgc="#4EB7A8" disabled="true"/><ArrBtn bgc="#4EB7A8" :dir="false" disabled="true"/>
       </div>
     </Group>
+    <Group title="Percentages &amp; Pie chart">
+      <div class="row">
+        <CircularProgress bgc="#E75735" :value="0" />
+        <CircularProgress bgc="#E75735" :value="38" />
+        <CircularProgress bgc="#E75735" :value="62" />
+        <CircularProgress bgc="#E75735" :value="circVal"/>
+        <Pie />
+      </div>
+    </Group>
+    <Group title="Stages">
+      <Stages :partsNum="6" bgc="#E75735"/>
+    </Group>
     <Group title="Form Elements">
       <div class="row">
-        <div class="col">1</div>
+        <div class="col">
+          <FBForm />
+        </div>
         <div class="col">
           <Group title="Toggles">
             <div class="row">
@@ -26,18 +40,28 @@
           </Group>
           <Group title="Tick boxes">
             <div class="row">
-              <Tickbox class="comp-outer" bgc="#4EB7A8" :value.sync="toggleState1"/>
-              <Tickbox class="comp-outer" bgc="#4EB7A8" :value.sync="toggleState2"/>
+              <Tickbox class="comp-outer" bgc="#4EB7A8" :value.sync="tickState1"/>
+              <Tickbox class="comp-outer" bgc="#4EB7A8" :value.sync="tickState2"/>
             </div>
           </Group>
         </div>
       </div>
     </Group>
+    <div class="row">
+      <Group title="Search &sol; Drop down">1</Group>
+      <Group title="User profile">
+        <Userprofile :udata="john" bgc2="#E75735"/>
+        <Userprofile :udata="sarah" bgc2="#E75735"/>
+      </Group>
+    </div>
     <Group title="News &amp; events">
       <div class="row">
         <Event class="comp-outer" :model="news"/>
         <Event class="comp-outer" :calendar="true" :model="calendar"/>
       </div>
+    </Group>
+    <Group title="Location">
+      <Location bgc="#E75735"/>
     </Group>
   </div>
 </template>
@@ -49,6 +73,12 @@ import ArrBtn from './components/ArrBtn.vue'
 import Event from './components/Event.vue'
 import Toggle from './components/Toggle.vue'
 import Tickbox from './components/Tickbox.vue'
+import FBForm from './components/FBForm.vue'
+import Location from './components/Location.vue'
+import Stages from './components/Stages.vue'
+import Userprofile from './components/Userprofile.vue'
+import CircularProgress from './components/CircularProgress.vue'
+import Pie from './components/Pie.vue'
 
 export default {
   name: 'app',
@@ -58,11 +88,19 @@ export default {
     ArrBtn,
     Event,
     Toggle,
-    Tickbox
+    Tickbox,
+    FBForm,
+    Location,
+    Stages,
+    Userprofile,
+    CircularProgress,
+    Pie
   },
   data: function() {
     return {
+      circVal:89, //change this with time
       toggleState1: true, toggleState2: false,
+      tickState1: true, tickState2: false,
       calendar: {
         title: 'THIS IS THE TITLE',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -80,7 +118,27 @@ export default {
         date: new Date(2018, 6, 7),
         bgc: '#E75735',
         bgc2: '#379285'
-        }
+        },
+      john: ()=>{return{
+        uname: "John Smith",
+        utitle: "UX Designer",
+        fb: '111',
+        tt: '222',
+        ll: '333',
+        img: require('./assets/img/john.png'),
+        bgposx: '-25px',
+        bgposy: '0',
+      }},
+      sarah: ()=>{return{
+        uname: "Sarah Brown",
+        utitle: "Developer",
+        fb: '111',
+        tt: '222',
+        ll: '333',
+        img: require('./assets/img/sarah.png'),
+        bgposx: '-85px',
+        bgposy: '-35px',
+      }}
     }
   }
 }

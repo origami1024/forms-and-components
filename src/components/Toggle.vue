@@ -59,7 +59,7 @@ export default {
     }
   },
   watch: {
-    value: function(newV, oldV){
+    value: function(newV){
       this.thumbX = newV ? 37 : 0
       this.labelX = newV ? -14 : 0
     }

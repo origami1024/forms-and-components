@@ -63,6 +63,7 @@ export default {
   border 3px solid #E5E5E5
   background-color #E5E5E5
   cursor auto
+  pointer-events none
 
 .arrbtn:disabled:after
   border-color white
