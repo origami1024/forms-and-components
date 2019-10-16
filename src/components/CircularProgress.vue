@@ -13,8 +13,6 @@
   </path>
   <text fill="#9d9d9d" :x="value>9 ? 9 : 13" y="22" stroke="#9d9d9d" stroke-width=1>{{value}}</text>
 </svg>
-<!-- <div class="circularProgress" :style="wrapStyle">{{value}}</div> -->
-<!-- :stroke-dasharray="`${value}, 100`" -->
 </template>
 
 <script>

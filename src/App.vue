@@ -20,7 +20,7 @@
         <CircularProgress bgc="#E75735" :value="38" />
         <CircularProgress bgc="#E75735" :value="62" />
         <CircularProgress bgc="#E75735" :value="circVal"/>
-        <Pie />
+        <Pie :segs="pieSegments"/>
       </div>
     </Group>
     <Group title="Stages">
@@ -50,8 +50,8 @@
     <div class="row">
       <Group title="Search &sol; Drop down">1</Group>
       <Group title="User profile">
-        <Userprofile :udata="john" bgc2="#E75735"/>
-        <Userprofile :udata="sarah" bgc2="#E75735"/>
+        <Userprofile :udata="john" bgc="#4EB7A8" bgc2="#E75735"/>
+        <Userprofile :udata="sarah" bgc="#4EB7A8" bgc2="#E75735"/>
       </Group>
     </div>
     <Group title="News &amp; events">
@@ -62,6 +62,12 @@
     </Group>
     <Group title="Location">
       <Location bgc="#E75735"/>
+    </Group>
+    <Group title="Location">
+      <div class="row">
+        1
+        <Message :mdata="msg1" bgc2="#46AB9D" bgc="#4EB7A8"/>
+      </div>
     </Group>
   </div>
 </template>
@@ -79,6 +85,7 @@ import Stages from './components/Stages.vue'
 import Userprofile from './components/Userprofile.vue'
 import CircularProgress from './components/CircularProgress.vue'
 import Pie from './components/Pie.vue'
+import Message from './components/Message.vue'
 
 export default {
   name: 'app',
@@ -94,13 +101,21 @@ export default {
     Stages,
     Userprofile,
     CircularProgress,
-    Pie
+    Pie,
+    Message
   },
   data: function() {
     return {
       circVal:89, //change this with time
       toggleState1: true, toggleState2: false,
       tickState1: true, tickState2: false,
+      msg1: ()=>{return{
+        uname: 'Sarah Brown',
+        img: require('./assets/img/sarah.png'),
+        bgposx: -85,
+        bgposy: 135,
+        incMsg: 'Hey! So are we cool to meet at the art gallery? Say 8pm'
+      }},
       calendar: {
         title: 'THIS IS THE TITLE',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -126,8 +141,8 @@ export default {
         tt: '222',
         ll: '333',
         img: require('./assets/img/john.png'),
-        bgposx: '-25px',
-        bgposy: '0',
+        bgposx: -25,
+        bgposy: 0,
       }},
       sarah: ()=>{return{
         uname: "Sarah Brown",
@@ -136,9 +151,10 @@ export default {
         tt: '222',
         ll: '333',
         img: require('./assets/img/sarah.png'),
-        bgposx: '-85px',
-        bgposy: '-35px',
-      }}
+        bgposx: -85,
+        bgposy: 135,
+      }},
+      pieSegments: ()=>{return [[15,'DimGray'],[110, 'orange'],[15,'green']]}
     }
   }
 }

@@ -4,7 +4,7 @@
       <span class="loc__marker"></span>
     </div>
     <div class="loc__controls">
-      <h3 class="loc__header">{{title}}</h3>
+      <h3 class="loc__header"><a href="#">{{title}}</a></h3>
       <h5 class="loc__place">{{place}}</h5>
       <div class="wrapper">
         <button class="loc__routeBtn">X</button>
@@ -16,6 +16,11 @@
 
 <script>
 //there is yandex-api script added to the head in the main.html
+//todo
+//mapMarker shade
+//style buttons
+//route button
+//my location button
 export default {
   name: 'Loc',
   props: {
@@ -59,13 +64,13 @@ export default {
             // The geometry description.
             geometry: {
                 type: "Point",
-                coordinates: [55.8, 37.8]
+                coordinates: [55.888, 37.888]
             },
             // Properties.
             properties: {
                 // The placemark content.
-                iconContent: 'I\'m draggable',
-                hintContent: 'Come on, drag already!'
+                iconContent: '',
+                hintContent: ''
             }
         }, {
             /**
@@ -73,10 +78,34 @@ export default {
              * The placemark's icon will stretch to fit its contents.
              */
             preset: 'islands#blackStretchyIcon',
+            iconLayout: 'default#imageWithContent',
+            // Custom image for the placemark icon.
+            iconImageHref: require('./../assets/img/mapMarker.svg'),
+            // The size of the placemark.
+            iconImageSize: [34, 45],
             // The placemark can be dragged.
             draggable: false
         })
-      myMap.geoObjects.add(myGeoObject)
+        let myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+            hintContent: 'A custom placemark icon',
+            balloonContent: 'This is a pretty placemark'
+        }, {
+            /**
+             * Options.
+             * You must specify this type of layout.
+             */
+            iconLayout: 'default#image',
+            // Custom image for the placemark icon.
+            iconImageHref: require('./../assets/img/mapMarker.svg'),
+            // The size of the placemark.
+            iconImageSize: [34, 45],
+            /**
+             * The offset of the upper left corner of the icon relative
+             * to its "tail" (the anchor point).
+             */
+            iconImageOffset: [-18, -45]
+        })
+      myMap.geoObjects.add(myPlacemark)
     }
   }
 }
@@ -91,10 +120,20 @@ export default {
   height 200px
 .loc__controls
   display flex
+  height 70px
+  box-sizing border-box
+  align-items center
+
 .loc__header
   flex 1 0 0
+  font-size 30px
+  font-weight 300
+  & a
+    color white
+    text-decoration none
 .loc__place
   flex 1 0 0
+  font-size 13px
 .wrapper
   flex 2 0 0
   display flex

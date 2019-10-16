@@ -38,9 +38,35 @@ export default {
         res += this.segz[index][0]
       }
       return res
+    },
+    breakSegs() {
+      let newVal = this.segs()
+      let res = []
+      let breaker360 = 0
+      for (let index = 0; index < newVal.length; index++) {
+        if (breaker360 + newVal[index][0] > 360) {
+          newVal[index][0] = 360 - breaker360
+        }
+        breaker360 += newVal[index][0]
+        if (newVal[index][0] < 180) {
+          res.push(newVal[index])
+        } else {
+          res.push([newVal[index][0]/2,newVal[index][1]])
+          res.push([newVal[index][0]/2,newVal[index][1]])
+        }
+        if (breaker360>=360) break
+      }
+      this.segz = res
+    }
+  },
+  watch: { 
+    segs: function(newVal, oldVal) { // watch it
+      //console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      this.breakSegs()
     }
   },
   mounted () {
+    this.breakSegs()
   }
 }
 </script>

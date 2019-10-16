@@ -1,8 +1,8 @@
 <template>
   <div class="uprofile" ref="uprofile">
-    <div class="uprofile__img" :style="imgStyle"></div>
+    <Userpicture class="uprofile__img" :img="udata().img" :bgposx="udata().bgposx" :bgposy="udata().bgposy"/>
     <div class="uprofile__detail">
-      <h2 class="uprofile__uname" :style="{color: bgc2}">{{udata().uname}}</h2>
+      <h2 class="uprofile__uname">{{udata().uname}}</h2>
       <h4 class="uprofile__utitle">{{udata().utitle}}</h4>
       <div class="uprofile__smedia">
         <a :href="'#'+udata().fb" class="uprofile__smlink">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-//TODO: MAKE THE HOVER CHANGE BG+ OF CARD
+import Userpicture from './Userpicture.vue'
 export default {
   name: 'Userprofile',
   props: {
@@ -47,19 +47,17 @@ export default {
     return {
     }
   },
+  components: {
+    Userpicture
+  },
   computed: {
-    imgStyle() {
-      return `
-      background-image: url(${this.udata().img});
-      background-position: ${this.udata().bgposx} ${this.udata().bgposy};
-      `
-    }
   },
   methods: {
     
   },
   mounted () {
     this.$refs.uprofile.style.setProperty('--hovercol', this.bgc2)
+    this.$refs.uprofile.style.setProperty('--bgc', this.bgc)
   }
 }
 </script>
@@ -68,21 +66,32 @@ export default {
 <style lang="stylus" scoped>
 *
   margin 0
+
 .uprofile
   --hovercol pink
+  --bgc blue
   display flex
   margin 25px 0
   color #4F4F4F
   &__uname
     font-size 18px
+    color var(--hovercol)
   &__utitle
     font-size 11px
     margin-bottom 11px
-  &__img
-    width 85px
-    height 85px
-    border-radius 100%
-    border 5px solid #E5E5E5
+    color #4F4F4F
+  &__smedia
+    display flex
+    justify-content space-evenly
+  &__smlink
+    display inline-block
+    min-width 25px
+    max-width 25px
+    max-height 21px
+    min-height 21px
+    background-size 100% 100%
+    &:hover
+      fill var(--hovercol)
   &__detail
     display flex
     flex-direction column
@@ -98,6 +107,15 @@ export default {
     margin-left 15px
     position relative
     z-index 2
+    cursor pointer
+    fill #757575
+    transition-duration .3s
+    &:hover
+      color white
+      fill white
+      background-color var(--bgc)
+      &:before
+        background-color var(--bgc)
     &:before
       content ''
       width 10px
@@ -109,16 +127,11 @@ export default {
       transform rotate(45deg)
       border-radius 3px
       z-index 1
-  &__smedia
-    display flex
-    justify-content space-evenly
-  &__smlink
-    display inline-block
-    min-width 25px
-    max-width 25px
-    max-height 21px
-    min-height 21px
-    background-size 100% 100%
-    &:hover
-      fill var(--hovercol)
+      transition-duration .3s
+.uprofile__detail:hover>.uprofile__uname
+  color white
+  
+.uprofile__detail:hover>.uprofile__utitle
+  color white
+
 </style>

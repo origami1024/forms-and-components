@@ -35,6 +35,7 @@ export default {
     wrapStyle() {
       return `
         background-color: ${this.bgc};
+        width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;
         padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
         margin-top: ${!this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
       `
