@@ -1,12 +1,13 @@
 <template>
   <form action="" class="fbform" v-on:submit.prevent="testSubmit">
     <div class="line">
-        <input class="fbform__input" type="text" name="username" placeholder="Your Name" :style="inputDefStyle">
+      <input class="fbform__input" type="text" name="username" placeholder="Your Name" :style="inputDefStyle">
       <div class="fbform__tip err">ERROR</div>
     </div>
     <div class="line">
       <input class="fbform__input" type="text" name="email" placeholder="Your Email" :style="inputDefStyle">
-      <div class="fbform__tip thx">THANKS!</div>
+      <StatusYNM />
+      <!-- <div class="fbform__tip thx">THANKS!</div> -->
     </div>
     <div class="line"><textarea name="msg" placeholder="Your Message"></textarea></div>
     <div class="line">
@@ -16,8 +17,12 @@
 </template>
 
 <script>
-//TODO: validation while typing! with that error, thanks thingies
+//TODO: validation while typing! with those error, thanks thingies
+//WHAT KIND OF COMPONENT IS THAT ERROR/THANKS?
+//like untickable tickbox vis/invis on isValid value?
+//StatusYN component?
 import Btn from './Btn.vue'
+import StatusYNM from './StatusYNM.vue'
 export default {
   name: 'FBForm',
   props: {
@@ -30,7 +35,8 @@ export default {
     }
   },
   components: {
-    Btn
+    Btn,
+    StatusYNM
   },
   computed: {
     inputDefStyle() {

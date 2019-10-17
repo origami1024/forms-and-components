@@ -11,7 +11,6 @@
 </template>
 
 <script>
-//todo: before drawing, get segz from props into data, and if some are <180, divide them into 2
 export default {
   name: 'Pie',
   props: {
@@ -60,7 +59,7 @@ export default {
     }
   },
   watch: { 
-    segs: function(newVal, oldVal) { // watch it
+    segs: function() { // watch it
       //console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.breakSegs()
     }

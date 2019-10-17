@@ -21,7 +21,7 @@ export default {
   computed: {
     stagesStyle() {
       return `
-        background-image: linear-gradient(90deg, ${this.bgc} 0%, ${this.bgc} ${((this.current - 1) * 100) / (this.partsNum - 1)}%, transparent ${((this.current - 1) * 100) / (this.partsNum - 1)}%);
+        background-image: linear-gradient(90deg, ${this.bgc} ${((this.current - 1) * 100) / (this.partsNum - 1)}%, transparent ${((this.current - 1) * 100) / (this.partsNum - 1)}%);
       `
     }
   },

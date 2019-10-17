@@ -1,17 +1,26 @@
 <template>
-  <div class="message" :style="wrapStyle">
-    <div class="message__top" :style="topStyle">
-      <h2 class="message__header">{{mdata().uname}}</h2>
-    </div>
-    <div class="message__midControls">
-      <div class="btn">1</div>
-      <Userpicture class="message__img" :img="mdata().img" :bgposx="mdata().bgposx" :bgposy="mdata().bgposy"/>
-      <div class="btn">2</div>
-    </div>
-    <div class="message__content">...</div>
-    <div class="message__responce">...</div>
-    <Btn bgc="#4EB7A8" bgcl="#28A290" title="REPLY"/>
-    
+  <div class="message" ref="message" :style="wrapStyle">
+    <form action="#">
+      <div class="message__top" :style="topStyle">
+        <h2 class="message__header">{{mdata().uname}}</h2>
+      </div>
+      <div class="message__midControls">
+        <a href="#" class="message__btns">
+          <svg width="20" height="21">
+            <use xlink:href="#chat" ></use>
+          </svg>
+        </a>
+        <Userpicture class="message__img" :img="mdata().img" :bgposx="mdata().bgposx" :bgposy="mdata().bgposy"/>
+        <a href="#" class="message__btns">
+          <svg width="24" height="19">
+            <use xlink:href="#camera" ></use>
+          </svg>
+        </a>
+      </div>
+      <div class="message__content">Hey! So are we cool to meet at the art gallery? Say 8pm</div>
+      <textarea name="response" class="message__response">Yeah that sounds great. See you then.</textarea>
+      <Btn bgc="#4EB7A8" bgcl="#28A290" title="REPLY"/>
+    </form>
   </div>
 </template>
 
@@ -53,6 +62,7 @@ export default {
   methods: {
   },
   mounted () {
+    this.$refs.message.style.setProperty('--hovercol', this.bgc2)
   }
 }
 </script>
@@ -62,6 +72,7 @@ export default {
 *
   margin 0
 .message
+  --hovercol pink
   min-width 290px
   color white
   background-color #F2F2F2
@@ -72,6 +83,13 @@ export default {
     font-size 18px
     //
   &__midControls
-    //
+    margin-top -47.5px
+    fill #8e8d8d
+    display flex
+    justify-content space-between
+    align-items flex-end
+    padding 0 22px
+.message__btns:hover
+  fill var(--hovercol)
   
 </style>

@@ -59,31 +59,31 @@ export default {
     }
   },
   methods: {
-    mouseMove(e){
+    mouseMove(){
     },
-    mouseOut(e){
+    mouseOut(){
       this.up = true
     },
     mouseDown(e){
-      this.animateRipple(e)
+      this.animateRipple(e.offsetX,e.offsetY)
       this.up = false
       
     },
-    mouseUp(e){
+    mouseUp(){
       this.up = true
     },
-    animateRipple(e) {
+    animateRipple(x, y) {
 			//let el  = this.$refs.tiBtn;
       //let pos = this.$refs.getBoundingClientRect();
-      this.$refs.ripple.style.left = (e.offsetX - 100) + 'px'
-      this.$refs.ripple.style.top = (e.offsetY - 100) + 'px'
+      this.$refs.ripple.style.left = (x - 100) + 'px'
+      this.$refs.ripple.style.top = (y - 100) + 'px'
       this.$refs.ripple.style.display = 'block'
       this.$refs.ripple.classList.remove('rippleAnimClass')
       void this.$refs.ripple.offsetWidth;
       this.$refs.ripple.classList.add('rippleAnimClass')
       
     },
-    rippleEnd: function(i) {
+    rippleEnd: function() {
       this.$refs.ripple.style.display = 'none'
 		}
   },
@@ -135,10 +135,6 @@ export default {
   opacity 0
   transition-duration 0.1s
   transform scale(0.1)
-
-.mDown
-  opacity 0.5
-  transform scale(1)
 
 .rippleAnimClass
   animation-name ripple
