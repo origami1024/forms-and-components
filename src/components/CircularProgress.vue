@@ -1,18 +1,19 @@
 <template>
-  <svg width="95" height=95 viewBox="0 0 36 36">
-  <path v-show="value>0"
-    d="M18 2.0845
-      a 15.9155 15.9155 0 0 1 0 31.831
-      a 15.9155 15.9155 0 0 1 0 -31.831"
-    fill="none"
-    :stroke="bgc"
-    stroke-width="2"
-    stroke-linecap=round
-  >
-    <animate attributeName="stroke-dasharray" dur="1s" from="0, 100" :to="`${value}, 100`" fill="freeze" />
-  </path>
-  <text fill="#9d9d9d" :x="value>9 ? 9 : 13" y="22" stroke="#9d9d9d" stroke-width=1>{{value}}</text>
-</svg>
+  <svg width="95" height="95" viewBox="0 0 36 36">
+    <path v-show="value>0"
+      d="M18 2.0845
+        a 15.9155 15.9155 0 0 1 0 31.831
+        a 15.9155 15.9155 0 0 1 0 -31.831"
+      fill="none"
+      :stroke="bgc"
+      stroke-width="2"
+      stroke-linecap=round
+      :stroke-dasharray="`${value}, 100`"
+      >
+      <animate attributeName="stroke-dasharray" dur="1s" from="0, 100" :to="`${value}, 100`"  />
+    </path>
+    <text fill="#9d9d9d" :x="value > 99 ? 5: value > 9 ? 9 : 13" y="22" stroke="#9d9d9d" stroke-width=1>{{value}}</text>
+  </svg>
 </template>
 
 <script>

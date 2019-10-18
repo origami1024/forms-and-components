@@ -1,21 +1,21 @@
 <template>
-  <svg class="ynm" :style="wrapStyle">
-    <use xlink:href="#ynm" ></use>
-    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white">{{val ? texty : textn}}</text>
+<transition name="slide-fade" mode="out-in">
+  <svg class="ynm" :key="val" :style="wrapStyle" v-if="val!==undefined">
+    <use xlink:href="#ynm" v-show="val!==undefined"></use>    
+    <text x="50%" y="50%" v-show="val!==undefined" dominant-baseline="middle" text-anchor="middle" fill="white">{{val ? texty : textn}}</text>
   </svg>
+</transition>
 </template>
 
 <script>
-//TODO: text doesnt change on invis(undefined), just style is invisible
-//TRANSITION IN/OUT ANIMATION
 export default {
   name: 'StatusYNM', //STATUS: YES/NO/MAYBE
   props: {
     val: {type: Boolean, default: undefined}, //TRUE FALSE UNDEFINED, INVIS ON UNDEF
     texty: {type: String, default: 'THANKS!'},
     textn: {type: String, default: 'ERROR'},
-    bgcy: {type: String, default: 'blue'},
-    bgcn: {type: String, default: 'red'},
+    bgcy: {type: String, default: '#4EB7A8'},
+    bgcn: {type: String, default: '#E75735'},
   },
   data: function() {
     return {
@@ -40,16 +40,19 @@ export default {
 *
   margin 0
 .ynm
-  //color white
-  //text-align center
-  //background-size 100% 100%
   width 75px
   min-width 75px
   height 28px
   font-size 11px
   font-family "Raleway", sans-serif
-  //line-height 28px
   box-sizing border-box
-  //padding-left 4px
   
+
+.slide-fade-enter-active
+  transition: all .3s ease;
+.slide-fade-leave-active
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+.slide-fade-enter, .slide-fade-leave-to
+  transform: rotateX(180deg);
+  opacity: 0;
 </style>

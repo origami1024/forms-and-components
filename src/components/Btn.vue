@@ -1,6 +1,6 @@
 <template>
   <div class="btnWrap" ref="btnwrapper" :style="wrapStyle">
-    <button class="Btn" ref="theBtn" :style="btnStyle" v-on="{ mousemove: mouseMove, mouseout: mouseOut, mousedown: mouseDown, mouseup: mouseUp}">{{title}}</button>
+    <button :disabled="disabled" class="Btn" ref="theBtn" :style="btnStyle" v-on="{ mousemove: mouseMove, mouseout: mouseOut, mousedown: mouseDown, mouseup: mouseUp}">{{title}}</button>
     <span class="ripple" ref="ripple" v-on:animationend="rippleEnd" :style="rippleStyle"></span>
   </div>
 </template>
@@ -14,7 +14,9 @@ export default {
     bgcl: {type: String, default: 'lightblue'},
     txtc: {type: String, default: 'white'},
     small: {type: Boolean, default: false},
-    w: {type: Number, default: null}
+    takefull: {type: Boolean, default: false},
+    w: {type: Number, default: null},
+    disabled: {type: Boolean, default: false},
   },
   data: function() {
     return {
@@ -28,16 +30,17 @@ export default {
         color: ${this.bgc}; 
         background-color: white;
         height: ${!this.small ? this.sizes.normal[1] : this.sizes.small[1]}px;
-        width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;
+        ${this.takefull ? 'width: auto;' : `width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;`}
         border: 1px solid ${this.bgc};
-      `
+      `//${this.takefull ? 'width: auto;': ''}
     },
     wrapStyle() {
       return `
         background-color: ${this.bgc};
-        width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;
+        ${this.takefull ? 'width: auto;' : `width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;`}
         padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
         margin-top: ${!this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
+        ${this.disabled ? 'filter: grayscale(100%); pointer-events: none;' : null}
       `
     },
     rippleStyle() {
@@ -107,6 +110,8 @@ export default {
   transition-duration .3s
   &:hover
     background-color var(--wrapHoverbgcl) !important
+.disabled
+  pointer-events none
 .Btn
   --btnhoverbg coral
   position relative
@@ -135,6 +140,7 @@ export default {
   opacity 0
   transition-duration 0.1s
   transform scale(0.1)
+
 
 .rippleAnimClass
   animation-name ripple

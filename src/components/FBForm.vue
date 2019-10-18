@@ -1,37 +1,36 @@
 <template>
   <form action="" class="fbform" v-on:submit.prevent="testSubmit">
     <div class="line">
-      <input class="fbform__input" type="text" name="username" placeholder="Your Name" :style="inputDefStyle">
-      <div class="fbform__tip err">ERROR</div>
+      <input v-model="uname" class="fbform__input" type="text" name="username" placeholder="Your Name" :style="inputDefStyle">
+      <StatusYNM :val="unValid"/>
     </div>
     <div class="line">
-      <input class="fbform__input" type="text" name="email" placeholder="Your Email" :style="inputDefStyle">
-      <StatusYNM />
+      <input v-model="mail" class="fbform__input" type="text" name="email" placeholder="Your Email" :style="inputDefStyle">
+      <StatusYNM :val="mailValid" />
       <!-- <div class="fbform__tip thx">THANKS!</div> -->
     </div>
     <div class="line"><textarea name="msg" placeholder="Your Message"></textarea></div>
     <div class="line">
-      <Btn class="fbform__submitBtn" bgc="#4EB7A8" bgcl="#28A290" title="SUBMIT"/>
+      <Btn class="fbform__submitBtn" bgc="#4EB7A8" bgcl="#28A290" title="SUBMIT" :disabled="!(unValid && mailValid)"/>
     </div>
   </form>
 </template>
 
 <script>
-//TODO: validation while typing! with those error, thanks thingies
-//WHAT KIND OF COMPONENT IS THAT ERROR/THANKS?
-//like untickable tickbox vis/invis on isValid value?
-//StatusYN component?
+//TODO: on submit - transition the form out, play loading animation, and then leave like thonx!
 import Btn from './Btn.vue'
 import StatusYNM from './StatusYNM.vue'
 export default {
   name: 'FBForm',
   props: {
-    title: {type: String, default: 'new group'}
+    // title: {type: String, default: 'new group'}
   },
   data: function() {
     return {
-      unValid: {type: Boolean, default: true},
-      mailValid: {type: Boolean, default: true}
+      uname: '',
+      mail: '',
+      unValid: undefined, //boolean + undefined
+      mailValid: undefined
     }
   },
   components: {
@@ -44,6 +43,16 @@ export default {
       width: 100%;
       margin-right: 4px;
       `
+    }
+  },
+  watch: {
+    uname: function (val) {
+      let unameRegExp = /^[A-Za-z][A-Za-z0-9]{5,25}$/
+      this.unValid = unameRegExp.test(val)
+    },
+    mail: function (val) {
+      let mailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      this.mailValid = mailRegExp.test(val)
     }
   },
   methods: {

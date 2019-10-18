@@ -17,7 +17,7 @@
     <Group title="Percentages &amp; Pie chart">
       <div class="row">
         <CircularProgress bgc="#E75735" :value="0" />
-        <CircularProgress bgc="#E75735" :value="38" />
+        <CircularProgress bgc="#E75735" :value="slider1value" />
         <CircularProgress bgc="#E75735" :value="62" />
         <CircularProgress bgc="#E75735" :value="circVal"/>
         <Pie :segs="pieSegments"/>
@@ -53,15 +53,21 @@
         </div>
       </div>
     </Group>
-    <div class="row">
-      <Group title="Search &sol; Drop down">1</Group>
+    <div class="row-bw">
+      <Group title="Search / Drop down">
+        <div class="col">
+          <Search />
+          <Search />
+          <Select />
+        </div>
+      </Group>
       <Group title="User profile">
         <Userprofile :udata="john" bgc="#4EB7A8" bgc2="#E75735"/>
         <Userprofile :udata="sarah" bgc="#4EB7A8" bgc2="#E75735"/>
       </Group>
     </div>
     <Group title="News &amp; events">
-      <div class="row">
+      <div class="row-bw">
         <Event class="comp-outer" :model="news"/>
         <Event class="comp-outer" :calendar="true" :model="calendar"/>
       </div>
@@ -69,14 +75,17 @@
     <Group title="Location">
       <Location bgc="#E75735"/>
     </Group>
-    <div class="row">
+    <div class="row-bw">
       <Group title="Calendar">
-        1
+        <Calendar bgc="#E75735"/>
       </Group>
       <Group title="Messaging">
         <Message :mdata="msg1" bgc2="#46AB9D" bgc="#4EB7A8"/>
       </Group>
     </div>
+    <Group title="Video">
+      1    
+    </Group>
   </div>
 </template>
 
@@ -95,6 +104,9 @@ import CircularProgress from './components/CircularProgress.vue'
 import Pie from './components/Pie.vue'
 import Message from './components/Message.vue'
 import Slider from './components/Slider.vue'
+import Search from './components/Search.vue'
+import Select from './components/Select.vue'
+import Calendar from './components/Calendar.vue'
 
 export default {
   name: 'app',
@@ -112,14 +124,17 @@ export default {
     CircularProgress,
     Pie,
     Message,
-    Slider
+    Slider,
+    Search,
+    Select,
+    Calendar
   },
   data: function() {
     return {
       circVal:89, //change this with time
       toggleState1: true, toggleState2: false,
       tickState1: true, tickState2: false,
-      slider1value: 40, slider2value: 77,
+      slider1value: 38, slider2value: 77,
       msg1: ()=>{return{
         uname: 'Sarah Brown',
         img: require('./assets/img/sarah.png'),
@@ -185,6 +200,10 @@ body
   display flex
   justify-content space-evenly
   margin 10px
+.row-bw
+  display flex
+  justify-content space-between
+  margin 10px 0
 .center
   margin 0 auto
 .comp-outer
