@@ -27,5 +27,6 @@ export default {
 .group__display
   outline 2px dashed pink
   padding 5px 0
+  overflow hidden
 
 </style>

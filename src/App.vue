@@ -10,8 +10,8 @@
     </Group>
     <Group title="Arrow buttons">
       <div class="row">
-        <ArrBtn bgc="#4EB7A8"/><ArrBtn bgc="#4EB7A8" :dir="false"/>
-        <ArrBtn bgc="#4EB7A8" disabled="true"/><ArrBtn bgc="#4EB7A8" :dir="false" disabled="true"/>
+        <ArrBtn bgc="#4EB7A8" hoverColor="#4EB7A8" /><ArrBtn bgc="#4EB7A8" hoverColor="#4EB7A8" :dir="false"/>
+        <ArrBtn bgc="#4EB7A8" hoverColor="#4EB7A8" disabled="true"/><ArrBtn bgc="#4EB7A8" hoverColor="#4EB7A8" :dir="false" disabled="true"/>
       </div>
     </Group>
     <Group title="Percentages &amp; Pie chart">
@@ -77,7 +77,7 @@
     </Group>
     <div class="row-bw">
       <Group title="Calendar">
-        <Calendar bgc="#E75735"/>
+        <Calendar :date="dateExample1" bgc="#E75735"/>
       </Group>
       <Group title="Messaging">
         <Message :mdata="msg1" bgc2="#46AB9D" bgc="#4EB7A8"/>
@@ -135,6 +135,7 @@ export default {
       toggleState1: true, toggleState2: false,
       tickState1: true, tickState2: false,
       slider1value: 38, slider2value: 77,
+      dateExample1: new Date(),
       msg1: ()=>{return{
         uname: 'Sarah Brown',
         img: require('./assets/img/sarah.png'),

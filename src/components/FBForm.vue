@@ -1,19 +1,23 @@
 <template>
-  <form action="" class="fbform" v-on:submit.prevent="testSubmit">
-    <div class="line">
-      <input v-model="uname" class="fbform__input" type="text" name="username" placeholder="Your Name" :style="inputDefStyle">
-      <StatusYNM :val="unValid"/>
+  <transition name="slide-fade" mode="out-in">
+    <form action="" v-if="!sent" class="fbform" v-on:submit.prevent="submit">
+      <div class="line">
+        <input v-model="uname" class="fbform__input" type="text" name="username" placeholder="Your Name" :style="inputDefStyle">
+        <StatusYNM :val="unValid"/>
+      </div>
+      <div class="line">
+        <input v-model="mail" class="fbform__input" type="text" name="email" placeholder="Your Email" :style="inputDefStyle">
+        <StatusYNM :val="mailValid" />
+      </div>
+      <div class="line"><textarea name="msg" placeholder="Your Message"></textarea></div>
+      <div class="line">
+        <Btn class="fbform__submitBtn" bgc="#4EB7A8" bgcl="#28A290" title="SUBMIT" :disabled="!(unValid && mailValid)"/>
+      </div>
+    </form>
+    <div v-if="sent" class="fbform__sent">
+      <p>data has been sent</p>
     </div>
-    <div class="line">
-      <input v-model="mail" class="fbform__input" type="text" name="email" placeholder="Your Email" :style="inputDefStyle">
-      <StatusYNM :val="mailValid" />
-      <!-- <div class="fbform__tip thx">THANKS!</div> -->
-    </div>
-    <div class="line"><textarea name="msg" placeholder="Your Message"></textarea></div>
-    <div class="line">
-      <Btn class="fbform__submitBtn" bgc="#4EB7A8" bgcl="#28A290" title="SUBMIT" :disabled="!(unValid && mailValid)"/>
-    </div>
-  </form>
+  </transition>
 </template>
 
 <script>
@@ -30,7 +34,8 @@ export default {
       uname: '',
       mail: '',
       unValid: undefined, //boolean + undefined
-      mailValid: undefined
+      mailValid: undefined,
+      sent: false
     }
   },
   components: {
@@ -56,8 +61,8 @@ export default {
     }
   },
   methods: {
-    testSubmit(){
-      //alert(1)
+    submit(){
+      this.sent = true
     }
   }
 }
@@ -65,6 +70,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
+
 .fbform
   width 290px
   box-sizing border-box
@@ -124,4 +130,15 @@ textarea
   background-size 100% 100%
 .fbform__submitBtn
   margin-left auto
+
+.fbform__sent
+  color black
+
+.slide-fade-enter-active
+  transition all .3s ease
+.slide-fade-leave-active
+  transition all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+.slide-fade-enter, .slide-fade-leave-to
+  transform rotateX(180deg)
+  opacity 0
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="btnWrap" ref="btnwrapper" :style="wrapStyle">
-    <button :disabled="disabled" class="Btn" ref="theBtn" :style="btnStyle" v-on="{ mousemove: mouseMove, mouseout: mouseOut, mousedown: mouseDown, mouseup: mouseUp}">{{title}}</button>
+  <div class="btnWrap" :style="wrapStyle">
+    <button :disabled="disabled" class="Btn" :style="btnStyle" v-on="{ mousemove: mouseMove, mouseout: mouseOut, mousedown: mouseDown, mouseup: mouseUp}">{{title}}</button>
     <span class="ripple" ref="ripple" v-on:animationend="rippleEnd" :style="rippleStyle"></span>
   </div>
 </template>
@@ -27,6 +27,7 @@ export default {
   computed: {
     btnStyle() {
       return `
+        --btnhoverbg: ${this.bgc};
         color: ${this.bgc}; 
         background-color: white;
         height: ${!this.small ? this.sizes.normal[1] : this.sizes.small[1]}px;
@@ -36,11 +37,13 @@ export default {
     },
     wrapStyle() {
       return `
+        --wrapHoverbgcl: ${this.bgcl};
         background-color: ${this.bgc};
         ${this.takefull ? 'width: auto;' : `width: ${this.w == null ? !this.small ? this.sizes.normal[0] : this.sizes.small[0] : this.w}px;`}
         padding-bottom: ${this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
         margin-top: ${!this.up ? !this.small ? this.sizes.normal[2] : this.sizes.small[2] : 0}px;
         ${this.disabled ? 'filter: grayscale(100%); pointer-events: none;' : null}
+        
       `
     },
     rippleStyle() {
@@ -91,8 +94,8 @@ export default {
 		}
   },
   mounted () {
-    this.$refs.theBtn.style.setProperty('--btnhoverbg', this.bgc)
-    this.$refs.btnwrapper.style.setProperty('--wrapHoverbgcl', this.bgcl)
+    //this.$refs.theBtn.style.setProperty('--btnhoverbg', this.bgc)
+    //this.$refs.btnwrapper.style.setProperty('--wrapHoverbgcl', this.bgcl)
   }
 }
 </script>

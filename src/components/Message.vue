@@ -1,6 +1,7 @@
 <template>
   <div class="message" ref="message" :style="wrapStyle">
-    <form action="#" v-on:submit.prevent="testSubmit">
+    <transition name="bounce" mode="out-in">
+    <form v-if="!sent" action="#" v-on:submit.prevent="submit" key="form">
       <div class="message__top" :style="topStyle">
         <h2 class="message__header">{{mdata().uname}}</h2>
       </div>
@@ -21,6 +22,10 @@
       <textarea name="response" class="message__response">Yeah that sounds great. See you then.</textarea>
       <Btn :takefull="true" class="message__replyBtn" bgc="#4EB7A8" bgcl="#28A290" title="REPLY"/>
     </form>
+    <div v-else class="fbform__sent" key="sent" mode="in-out">
+      <p>data has been sent</p>
+    </div>
+    </transition>
   </div>
 </template>
 
@@ -43,6 +48,7 @@ export default {
   },
   data: function() {
     return {
+      sent: false
     }
   },
   components: {
@@ -51,7 +57,9 @@ export default {
   },
   computed: {
     wrapStyle() {
-      return ``
+      return `
+      --hovercol: ${this.bgc2};
+      `
     },
     topStyle() {
       return `
@@ -61,10 +69,12 @@ export default {
     }
   },
   methods: {
-    testSubmit(){}
+    submit(){
+      this.sent = true
+    }
   },
   mounted () {
-    this.$refs.message.style.setProperty('--hovercol', this.bgc2)
+    //this.$refs.message.style.setProperty('--hovercol', this.bgc2)
   }
 }
 </script>
@@ -133,4 +143,34 @@ export default {
 .message__btns:hover
   fill var(--hovercol)
 
+.fbform__sent
+  color black
+  
+.slide-fade-enter-active
+  transition all .3s ease
+.slide-fade-leave-active
+  transition all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+.slide-fade-enter, .slide-fade-leave-to
+  transform translate(20px)
+  opacity 0
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  //animation: bounce-in .5s reverse;
+  transition all .3s ease
+  transform translateX(20px)
+  opacity 0
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 </style>

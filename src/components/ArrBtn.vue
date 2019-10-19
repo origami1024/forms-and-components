@@ -1,5 +1,5 @@
 <template>
-  <button ref="arr" class="arrbtn" :class="{ arrleft: dir }"></button>
+  <button ref="arr" class="arrbtn" :class="{ arrleft: dir }" :style="{'--bgc': this.bgc, '--hcolor': this.hoverColor}"></button>
 </template>
 
 <script>
@@ -7,10 +7,10 @@ export default {
   name: 'ArrBtn',
   props: {
     dir: {type: Boolean, default: true}, //true = right, false = left
-    bgc: {type: String, default: "blue"}
+    bgc: {type: String, default: "blue"},
+    hoverColor: {type: String, default: "blue"},
   },
   mounted () {
-    this.$refs.arr.style.setProperty('--bgc', this.bgc)
   }
 }
 </script>
@@ -18,6 +18,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 .arrbtn
+  --hcolor blue
   display block
   width 50px
   height 50px
@@ -54,7 +55,7 @@ export default {
     margin-left 10px
 
 .arrbtn:hover
-  background-color var(--bgc)
+  background-color var(--hcolor)
 
 .arrbtn:hover:after
   border-color white
