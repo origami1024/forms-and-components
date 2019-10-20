@@ -3,9 +3,13 @@
     <div class="calendar__top" :style="headerStyle">
       <p class="calendar__header">{{date.getDate()}}</p>
       <div class="calendar__monthControl">
-        <ArrBtn :style="{border: 0}" bgc="white" hoverColor="#ffffff33"/>
-        {{getMonth}}
-        <ArrBtn :dir="false" :style="{border: 0}" bgc="white" hoverColor="#ffffff33"/>
+        <ArrBtn :style="{border: 0}" bgc="white" hoverColor="#ffffff33" @click="monDec"/>
+        <transition name="slide-fade" mode="out-in">
+          <div :key="getMonth">
+            {{this.months[getMonth]}}
+          </div>
+        </transition>
+        <ArrBtn :dir="false" :style="{border: 0}" bgc="white" hoverColor="#ffffff33" @click="monInc"/>
       </div>
     </div>
       <div class="calendar__dayControl">
@@ -13,22 +17,25 @@
           <tr class="calendar__tableHeader" :style="thStyle">
             <th class="calendar__cell" v-for="item in weekDays" :key="item">{{item}}</th>
           </tr>
-          <!-- HERE GOES 7tr each containing 5 td -->
-          <tr v-for="item in 5" :key="item">
-            <td class="calendar__cell calendar__daycell" v-for="subitem in 7" :key="subitem" :class="{currentDay: ((subitem + 1) + ((item - 1) * 7)) === generateTable[generateTable.length-3], secondaryDay: ((subitem + ((item - 1) * 7) < generateTable[generateTable.length-2]) || ((subitem + 1) + ((item - 1) * 7)>generateTable[generateTable.length-1]))}">{{generateTable[(subitem - 1) + ((item - 1) * 7)]}}</td>
+          <!-- HERE GOES 7tr each containing 6 td -->
+          <tr v-for="item in 6" :key="item">
+            <td
+              @click="datePick(generateTable[(subitem - 1) + ((item - 1) * 7)])"
+              class="calendar__cell calendar__daycell"
+              v-for="subitem in 7"
+              :key="((subitem + 1) + ((item - 1) * 7))"
+              :class="{
+                currentDay: ((subitem + 1) + ((item - 1) * 7)) === generateTable[generateTable.length-3],
+                secondaryDay: (((subitem) + ((item - 1) * 7) < generateTable[generateTable.length-2]) || ((subitem + 1) + ((item - 1) * 7)>generateTable[generateTable.length-1]))
+              }">{{generateTable[(subitem - 1) + ((item - 1) * 7)]}}</td>
           </tr>
         </table>
       </div>
-    <div class="calendar__footer">TODAY</div>
+    <div class="calendar__footer">{{differenceLabel}}</div>
   </div>
 </template>
 
 <script>
-//do a table with table head as weekdays
-//change word in the footer
-//
-//CLICKABLE MONTH ARROWS
-//CLICKBALE DAYS IN TABLE
 import ArrBtn from './ArrBtn.vue'
 export default {
   name: 'Calendar',
@@ -40,34 +47,51 @@ export default {
     return {
       months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       weekDays: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      table: []
+      table: [],
+      virtualMonthDisplacer: 0
     }
   },
   computed: {
+    differenceLabel() {
+      let today = new Date(),
+        current = this.date,
+        daysDiff = Math.ceil((current.getTime() - today.getTime()) / (1000 * 3600 * 24)),
+        res = daysDiff < -1 ? `${ - daysDiff} DAYS AGO` : daysDiff === -1 ? 'YESTERDAY' : daysDiff === 0 ? 'TODAY' : daysDiff === 1 ? 'TOMORROW' : daysDiff > 1 ? `IN ${daysDiff} DAYS` : 'ERROR'
+        return res
+    },
     generateTable() {
       let date = this.date
+      let tmpMonth = this.getMonth
       let tmpTable = []
-      let lastDayOfThisMonth = new Date(date.getFullYear(), date.getMonth()+1, 0).getDate()
-      console.log(lastDayOfThisMonth)
+      let lastDayOfThisMonth = new Date(date.getFullYear(), tmpMonth + 1, 0).getDate()
       for (let i=1; i<=lastDayOfThisMonth; i++) {
         tmpTable.push(i)
       }
-      let firstWeekDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1).getDay()
-      let lastDayOfPrevMonth = new Date(date.getFullYear(), date.getMonth(), 0).getDate()
-      
+      let firstWeekDayOfMonth = new Date(date.getFullYear(), tmpMonth, 1).getDay()
+      if (firstWeekDayOfMonth == 0) {firstWeekDayOfMonth = 7}
+      let lastDayOfPrevMonth = new Date(date.getFullYear(), tmpMonth, 0).getDate()
+    
       for (let index = 0; index < firstWeekDayOfMonth - 1; index++) {
         tmpTable.unshift(lastDayOfPrevMonth - index)
+        
       }
-      for (let i=1; i<=7; i++) {
+      for (let i=1; i<=12; i++) {
         tmpTable.push(i)
       }
-      tmpTable.push(firstWeekDayOfMonth + date.getDate())
+      if ((this.virtualMonthDisplacer % 12)===0) {
+        tmpTable.push(firstWeekDayOfMonth + date.getDate())
+        
+      } else {
+        tmpTable.push(-1)
+      }
+      
       tmpTable.push(firstWeekDayOfMonth)
       tmpTable.push(lastDayOfThisMonth + firstWeekDayOfMonth)
       return tmpTable
+      
     },
     getMonth() {
-      return this.months[this.date.getMonth()]
+      return (this.date.getMonth() + 12 + this.virtualMonthDisplacer) % 12
     },
     headerStyle() {
       return `
@@ -86,6 +110,18 @@ export default {
     ArrBtn
   },
   methods: {
+    datePick(day){
+      let nd = new Date(this.date.getFullYear(), this.getMonth, parseInt(day))
+      this.virtualMonthDisplacer = 0
+      this.$emit('update:date', nd)
+    },
+    monDec: function (){
+      this.virtualMonthDisplacer > 0 ? this.virtualMonthDisplacer -= 1 : this.virtualMonthDisplacer = 11
+      //APPLY THIS VIRTUAL STUFF INTO THE DATE OBJECT WHEN USER PICKS THE NEW DAY
+    },
+    monInc(){
+      this.virtualMonthDisplacer += 1
+    }
   },
   mounted () {
   }
@@ -151,9 +187,25 @@ export default {
     border-right 1px solid white
 .secondaryDay
   color white
-  font-size 18px  
+  font-size 18px
+  pointer-events none
 .currentDay
   color #fff
   background-color var(--bgc)
 
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(50px);
+  opacity: 0;
+}
+.slide-fade-leave-to
+  transform: translateX(-100px);
+  opacity: 0;
 </style>

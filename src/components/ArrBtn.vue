@@ -1,5 +1,5 @@
 <template>
-  <button ref="arr" class="arrbtn" :class="{ arrleft: dir }" :style="{'--bgc': this.bgc, '--hcolor': this.hoverColor}"></button>
+  <button @click="$emit('click')" class="arrbtn" :class="{ arrleft: dir }" :style="{'--bgc': this.bgc, '--hcolor': this.hoverColor}"></button>
 </template>
 
 <script>

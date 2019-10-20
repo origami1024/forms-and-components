@@ -77,7 +77,7 @@
     </Group>
     <div class="row-bw">
       <Group title="Calendar">
-        <Calendar :date="dateExample1" bgc="#E75735"/>
+        <Calendar :date.sync="dateExample1" bgc="#E75735"/>
       </Group>
       <Group title="Messaging">
         <Message :mdata="msg1" bgc2="#46AB9D" bgc="#4EB7A8"/>
