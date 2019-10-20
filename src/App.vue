@@ -205,6 +205,10 @@ body
   display flex
   justify-content space-between
   margin 10px 0
+.col
+  display flex
+  flex-direction column
+  justify-content space-between
 .center
   margin 0 auto
 .comp-outer
