@@ -1,9 +1,9 @@
 <template>
-  <div class="search" :style="wrapStyle">
-    <input class="search__input" type="text" placeholder="Search">
-    <button>
-      <svg class="search__icon" width=15 height=15>
-        <use xlink:href="#mGlass"></use> 
+  <div class="search" :style="{'--bgc': bgc}">
+    <input class="search__input" type="text" placeholder="Search" :style="inputStyle">
+    <button class="search__btn" @click="alert">
+      <svg class="search__icon">
+        <use fill="white" xlink:href="#mGlass"></use> 
       </svg>
     </button>
   </div>
@@ -13,7 +13,6 @@
 export default {
   name: 'Search',
   props: {
-    title: {type: String, default: 'BUTTON'},
     bgc: {type: String, default: 'blue'},
   },
   data: function() {
@@ -21,13 +20,16 @@ export default {
     }
   },
   computed: {
-    wrapStyle() {
+    inputStyle() {
       return `
-      background-color: ${this.bgc};
+      width: 100%;
       `
     }
   },
   methods: {
+    alert(){
+      alert(1)
+    }
   },
   mounted () {
   }
@@ -39,7 +41,25 @@ export default {
 *
   margin 0
 .search
+  --bgc red
   margin 10px 0
+  position relative
+  display flex
+  &__icon
+    width 15px
+    height 15px
+  &__btn
+    //position absolute
+    border 0
+    border-top-right-radius 3px
+    border-bottom-right-radius 3px
+    background-color var(--bgc)
+    padding 0
+    display flex
+    justify-content center
+    align-items center
+    width 35px
+    cursor pointer
 .search__input
   background-color #E5E5E5
   border 0
@@ -47,7 +67,7 @@ export default {
   border-bottom-left-radius 3px
   font-size 14px
   color #888888
-  padding 9px 14px
+  padding 6px 14px
   &::placeholder
     color #888888
   

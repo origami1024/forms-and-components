@@ -1,13 +1,18 @@
 <template>
-  <select class="select">
+  <select class="select" placeholder="Choose An Option">
+    <option value="" disabled selected style="display:none;">Choose An Option</option>
     <option value="volvo">Volvo</option>
     <option value="saab">Saab</option>
     <option value="mercedes">Mercedes</option>
     <option value="audi">Audi</option>
-  </select> 
+  </select>
 </template>
 
 <script>
+//receive list of items
+//syncronize wot is picked with parent
+//custom style for the button
+//custom style for visible text
 export default {
   name: 'Select',
   props: {
@@ -34,6 +39,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
+*
+  margin 0
 
+.select
+  background-color #E5E5E5
+  border 0
+  border-top-left-radius 3px
+  border-bottom-left-radius 3px
+  font-size 14px
+  color #888888
+  padding 6px 14px
   
 </style>

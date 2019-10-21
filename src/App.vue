@@ -56,9 +56,9 @@
     <div class="row-bw">
       <Group title="Search / Drop down">
         <div class="col">
-          <Search />
-          <Search />
-          <Select />
+          <Search bgc="#E75735"/>
+          <Search bgc="#E75735"/>
+          <Select bgc="#4EB7A8"/>
         </div>
       </Group>
       <Group title="User profile">
@@ -84,7 +84,7 @@
       </Group>
     </div>
     <Group title="Video">
-      1    
+      <Video :vSrc="videoUrl" />
     </Group>
   </div>
 </template>
@@ -107,6 +107,7 @@ import Slider from './components/Slider.vue'
 import Search from './components/Search.vue'
 import Select from './components/Select.vue'
 import Calendar from './components/Calendar.vue'
+import Video from './components/Video.vue'
 
 export default {
   name: 'app',
@@ -127,7 +128,8 @@ export default {
     Slider,
     Search,
     Select,
-    Calendar
+    Calendar,
+    Video
   },
   data: function() {
     return {
@@ -136,6 +138,7 @@ export default {
       tickState1: true, tickState2: false,
       slider1value: 38, slider2value: 77,
       dateExample1: new Date(),
+      videoUrl: './assets/vid/bunny.webm',
       msg1: ()=>{return{
         uname: 'Sarah Brown',
         img: require('./assets/img/sarah.png'),
