@@ -43,6 +43,7 @@ export default {
   margin 0
 
 .select
+  --bgc pink
   background-color #E5E5E5
   border 0
   border-top-left-radius 3px
@@ -50,5 +51,13 @@ export default {
   font-size 14px
   color #888888
   padding 6px 14px
+  appearance none
+  position relative
+  &:after
+    background-color var(--bgc)
+    position absolute
+    content ''
+    
+
   
 </style>
