@@ -34,6 +34,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
+.video
+  border 1px solid black
 
   
 </style>

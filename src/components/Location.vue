@@ -25,7 +25,7 @@
 <script>
 let
   myMap = undefined,
-  markerPos = [44.9, 34.14],
+  markerPos = [44.98, 34.14],
   ownPos = undefined,
   destTitle = 'some'
 //TODO: need to clean the code a bit
@@ -106,10 +106,14 @@ export default {
       let geolocation = ymaps.geolocation
       myMap = new ymaps.Map('map', {
           center: markerPos,
-          zoom: 7,  
+          zoom: 9,  
           controls: []
         }, {})
-
+      // myMap.behaviors.disable('scrollZoom')
+      // myMap.controls.add('zoomControl', {
+      //   size: "small",
+      //   position: []
+      // });
       let myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
           hintContent: 'A custom placemark icon',
           balloonContent: 'This is a pretty placemark'

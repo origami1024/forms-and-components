@@ -1,10 +1,7 @@
 <template>
-  <select class="select" placeholder="Choose An Option">
+  <select class="select" placeholder="Choose An Option" :style="selectStyle">
     <option value="" disabled selected style="display:none;">Choose An Option</option>
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="mercedes">Mercedes</option>
-    <option value="audi">Audi</option>
+    <option v-for="option in input()" :value="option.val" :key="option.val">{{option.inner}}</option>
   </select>
 </template>
 
@@ -16,7 +13,12 @@
 export default {
   name: 'Select',
   props: {
-    title: {type: String, default: 'BUTTON'},
+    input: {type: Function, default: ()=>{return[
+      {val: 'volvo', inner: 'Volvo'},
+      {val: 'saab', inner:  'Saab 1'},
+      {val: 'mercedes', inner:  'Mercedes'},
+      {val: 'audi', inner: 'Audi'}
+    ]}},
     bgc: {type: String, default: 'blue'},
   },
   data: function() {
@@ -24,9 +26,9 @@ export default {
     }
   },
   computed: {
-    wrapStyle() {
+    selectStyle() {
       return `
-      background-color: ${this.bgc};
+      --bgc: ${this.bgc};
       `
     }
   },
@@ -53,11 +55,19 @@ export default {
   padding 6px 14px
   appearance none
   position relative
+  background-image url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='13'><polyline stroke='white' fill='none' stroke-width='2' vector-effect='non-scaling-stroke' points='0,0 8,8 17,0' stroke-linejoin='round'></polyline></svg>"), linear-gradient(to left, var(--bgc), var(--bgc) 34px, transparent 34px)
+  background-repeat no-repeat
+  background-position calc(100% - 7px) calc(50% + 3px), 0 0
+  cursor pointer
   &:after
-    background-color var(--bgc)
+    background-color red
     position absolute
-    content ''
-    
+    content 'aaaaaaaaass'
+    width 11px
+    height 11px
+    border 2px solid #fff
+    top 50%
+    right 10px
 
   
 </style>

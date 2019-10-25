@@ -9,7 +9,7 @@
         <input v-model="mail" class="fbform__input" type="text" name="email" placeholder="Your Email" :style="inputDefStyle">
         <StatusYNM ref="statusYNMM" :val="mailValid" />
       </div>
-      <div class="line"><textarea name="msg" placeholder="Your Message"></textarea></div>
+      <div class="line"><textarea class="fbform__ta" name="msg" placeholder="Your Message"></textarea></div>
       <div class="line">
         <Btn class="fbform__submitBtn" bgc="#4EB7A8" bgcl="#28A290" title="SUBMIT" />
       </div>
@@ -93,7 +93,7 @@ export default {
 .fbform
   width 290px
   box-sizing border-box
-
+  margin-top 30px
 .line
   display flex
   justify-content space-between
@@ -116,7 +116,7 @@ export default {
   letter-spacing 0.14px
   //flex 1 0 auto
   width 100%
-textarea
+.fbform__ta
   border-radius 3px
   background-color #e5e5e5
   font-family Raleway, sans-serif
@@ -125,7 +125,7 @@ textarea
   letter-spacing 0.14px
   color #888888
   border 0
-  width 100%
+  width 100% !important
   padding 0 13px
   height 89px
   resize none

@@ -1,7 +1,7 @@
 <template>
   <div class="search" :style="{'--bgc': bgc}">
-    <input class="search__input" type="text" placeholder="Search" :style="inputStyle">
-    <button class="search__btn" @click="alert">
+    <input class="search__input" type="text" @keyup.enter="go" placeholder="Search" :style="inputStyle">
+    <button class="search__btn" @click="go">
       <svg class="search__icon">
         <use fill="white" xlink:href="#mGlass"></use> 
       </svg>
@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    alert(){
+    go(){
       alert(1)
     }
   },
@@ -58,7 +58,8 @@ export default {
     display flex
     justify-content center
     align-items center
-    width 35px
+    width 34px
+    min-width 34px
     cursor pointer
 .search__input
   background-color #E5E5E5

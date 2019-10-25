@@ -20,12 +20,11 @@ export default {
 <style lang="stylus" scoped>
 .group
   text-align center
-  outline 2px dashed lime
+  //outline 1px solid lime
   font-family Raleway, sans-serif
   padding 10px 0
 
 .group__display
-  outline 2px dashed pink
   padding 5px 0
   overflow hidden
 

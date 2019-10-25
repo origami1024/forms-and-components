@@ -36,12 +36,13 @@ export default {
       return "text-align:center; padding:5px; width:25px; height: 18px; font-size: 15px; line-height:15px; display: inline-block; background-image:" + this.popBgSVG + "background-size:100% 100%;position:relative; color: white;bottom: 12px; left:" + (parseInt(this.$props.val)*2 + 9) + "px; " + `visibility: ${this.showPop ? 'visible' : 'hidden'};`
     },
     rulerStyle() {
-      return `width: 220px; margin: 0 17px; display: flex; justify-content: space-between; font-size: 12px; padding-top: 8px; color: gray; visibility: ${this.showRuler ? 'visible' : 'hidden'};`
+      return `padding-left: 5px; user-select: none; width: 220px; margin: 0 17px; display: flex; justify-content: space-between; font-size: 12px; padding-top: 8px; color: gray; visibility: ${this.showRuler ? 'visible' : 'hidden'};`
     },
     trunkStyle() {
       return `
       width: 220px;
       margin: 0 17px;
+      cursor: pointer;
       ${this.showGrad ? `background-image: linear-gradient(90deg, ${this.bgc} ${this.val}%, transparent ${this.val}%);` : ''}
       
       `
@@ -65,7 +66,7 @@ thumb()
   appearance none
   width 20px
   height 20px
-  background var(--thumbFill)//#E75735
+  background var(--thumbFill)
   cursor pointer
   border-radius 100%
   border 0
