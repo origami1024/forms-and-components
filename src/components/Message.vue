@@ -1,6 +1,6 @@
 <template>
   <div class="message" ref="message" :style="wrapStyle">
-    <transition name="bounce" mode="out-in">
+    <transition appear name="bounce" mode="out-in">
     <form v-if="!sent" action="#" v-on:submit.prevent="submit" key="form">
       <div class="message__top" :style="topStyle">
         <h2 class="message__header">{{mdata().uname}}</h2>

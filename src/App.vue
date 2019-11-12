@@ -199,6 +199,7 @@ body
   font-family Raleway, sans-serif
 #app
   max-width 600px //change to 460
+  min-width 600px
   margin 0 auto
 .row
   display flex
