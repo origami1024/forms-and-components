@@ -53,5 +53,4 @@ export default {
   position absolute
   border-radius 100%
   color #888
-
 </style>

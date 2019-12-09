@@ -27,6 +27,7 @@ export default {
 .group__display
   padding 5px 0
   overflow hidden
+  flex-wrap wrap
   
 
 </style>
